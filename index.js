@@ -16,8 +16,11 @@ module.exports = function create (opts) {
   if (!opts.dir) opts.dir = app.getAppPath()
   if (!(path.isAbsolute(opts.dir))) opts.dir = path.resolve(opts.dir)
   if (!opts.index) opts.index = 'file://' + path.join(opts.dir, 'index.html')
-  if (!opts['window-position']) opts['window-position'] = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter'
   if (typeof opts['show-dock-icon'] === 'undefined') opts['show-dock-icon'] = false
+
+  // window-position is deprecated as of electron 0.37
+  if (opts['window-position']) opts.windowPosition = opts['window-position']
+  if (!opts.windowPosition) opts.windowPosition = (process.platform === 'win32') ? 'trayBottomCenter' : 'trayCenter'
 
   // set width/height on opts to be usable before the window is created
   opts.width = opts.width || 400
