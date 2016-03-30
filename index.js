@@ -16,7 +16,10 @@ module.exports = function create (opts) {
   if (!opts.dir) opts.dir = app.getAppPath()
   if (!(path.isAbsolute(opts.dir))) opts.dir = path.resolve(opts.dir)
   if (!opts.index) opts.index = 'file://' + path.join(opts.dir, 'index.html')
-  if (typeof opts['show-dock-icon'] === 'undefined') opts['show-dock-icon'] = false
+
+  // show-dock-icon is deprecated as of electron 0.37
+  if (opts['show-dock-icon']) opts.showDockIcon = opts['show-dock-icon']
+  if (typeof opts.showDockIcon === 'undefined') opts.showDockIcon = false
 
   // window-position is deprecated as of electron 0.37
   if (opts['window-position']) opts.windowPosition = opts['window-position']
